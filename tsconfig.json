@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // Target modern JavaScript
+    "module": "ESNext", // Use the ES module system
+    "moduleResolution": "Bundler", // Resolve modules for bundlers like Vite
+    "jsx": "react-jsx", // Use React JSX
+    "strict": true, // Enable strict type checking
+    "esModuleInterop": true, // Enable ES module interop for CommonJS modules
+    "allowSyntheticDefaultImports": true, // Allow default imports from CommonJS modules
+    "forceConsistentCasingInFileNames": true, // Enforce consistent casing in imports
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "baseUrl": ".", // Base directory for resolving non-relative module names
+    "paths": {
+      "@/*": ["src/*"], // Alias for the src directory
+      "@app/*": ["src/app/*"],
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"],
+      "@utils/*": ["src/utils/*"]
+    },
+    "resolveJsonModule": true, // Enable importing JSON files
+    "isolatedModules": true, // Ensure each file is a separate module
+    "noEmit": true // Prevent emitting JavaScript files
+  },
+  "include": ["src"], // Include the src directory in the compilation
+  "exclude": ["node_modules", "dist"] // Exclude node_modules and dist directories
+}
