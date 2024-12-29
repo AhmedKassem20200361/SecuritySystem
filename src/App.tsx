@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, CSSProperties } from "react";
+import { CircleSpinner } from "react-spinners-kit";
 import { Provider } from "./components/ui/provider";
 import { Alert } from "@/components/ui/alert";
 import { Door } from "./components/door";
-import { Spinner } from "@chakra-ui/react"
 import open from "./audio/open.wav";
 import close from "./audio/close.wav";
 import skeleton from "./audio/skeleton.wav";
@@ -10,6 +10,7 @@ import spider from "./audio/spider.wav";
 import villager from "./audio/villager.wav";
 import zombie from "./audio/zombie.wav";
 import enderman from "./audio/enderman.wav";
+import click from "./audio/click.wav";
 
 const mobSounds = [
   skeleton,
@@ -136,6 +137,10 @@ function App() {
       </Alert>
       )}
       <div className="w-full flex flex-col items-center justify-center h-screen">
+      <div className="flex flex-col items-center h-[86px]">
+      <p className="text-black font-minecraft font-bold text-3xl">{isSwitchDisabled && `Door is ${door?"opening":"closing"}...`}</p>
+      <CircleSpinner size={50} color="black" loading={isSwitchDisabled}/>
+      </div>
       {isSocketConnected && <Door open={door} handleSwitch={handleSwitch} isSwitchDisabled={isSwitchDisabled} />}
       {!ESPIp &&
       <div className="flex flex-col items-center">
@@ -145,7 +150,7 @@ function App() {
           placeholder="ESP8266 IP Address"
           onKeyPress={handleKeyPress}
         />
-        <button onClick={() => setESPIp("ws://" + (document.querySelector("input") as HTMLInputElement).value)} className="mt-4 bg-blue-500 text-white p-2 rounded-md">Connect</button>
+        <button onClick={() => {setESPIp("ws://" + (document.querySelector("input") as HTMLInputElement).value); const clickAudio=new Audio(click); clickAudio.play();}} className="mt-4 bg-planks bg-small text-white p-2 font-minecraft text-[42px]"><p className=" drop-shadow-[0_2.2px_2.2px_rgba(0,0,0,0.8)]">Connect</p></button>
       </div>
       }
       </div>

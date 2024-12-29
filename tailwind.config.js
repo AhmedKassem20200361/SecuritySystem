@@ -9,6 +9,13 @@ export default {
       fontFamily: {
         minecraft: ['Minecraft', 'sans-serif'],
       },
+      backgroundImage:{
+        'dirt': "url('./src/img/dirt.jpg')",
+        'planks': "url('./src/img/planks.png')",
+      },
+      backgroundSize:{
+        'small': '80px 80px'
+      }
     },
   },
   plugins: [],
