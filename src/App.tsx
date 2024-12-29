@@ -19,6 +19,7 @@ const mobSounds = [
 ]
 
 function App() {
+  const [ESPIp, setESPIp] = useState<string|null>(null);
   const [sensorState, setSensorState] = useState<boolean | null>(null);
   const [door, setDoor] = useState<boolean>(false);
   const [socket, setSocket] = useState<WebSocket | null>(null); // Track WebSocket connection
@@ -57,7 +58,7 @@ function App() {
 
   useEffect(() => {
     // Try to connect to the WebSocket server
-    const socketConnection = new WebSocket("ws://192.168.173.189/ws");
+    if(ESPIp) {const socketConnection = new WebSocket(ESPIp+"/ws"); // Create a new WebSocket connection
     setSocket(socketConnection); // Store the WebSocket connection
 
     socketConnection.onopen = () => {
@@ -71,8 +72,8 @@ function App() {
       if (event.data === "true" || event.data === "false") {
         const newSensorState = event.data === "true";
         setSensorState(newSensorState);
-        setShowAlert(newSensorState); // Show alert if sensor state is true
       }
+      
     };
 
     socketConnection.onerror = (error) => {
@@ -90,13 +91,19 @@ function App() {
         socketConnection.close();
       }
     };
-  }, []);
+  }
+  }, [ESPIp]);
 
   useEffect(() => {
-    if (sensorState) {
+    console.log(sensorState && !door);
+    if (sensorState && !door) {
       const randomMobSound = mobSounds[Math.floor(Math.random() * mobSounds.length)];
       const mobAudio = new Audio(randomMobSound);
       mobAudio.play();
+      setShowAlert(true);
+    }
+    else {
+      setShowAlert(false);
     }
   }, [sensorState]);
 
@@ -114,6 +121,15 @@ function App() {
       )}
       <div className="w-full flex flex-col items-center justify-center h-screen">
       {isSocketConnected && <Door open={door} handleSwitch={handleSwitch}/>}
+      {!ESPIp &&
+      <div className="flex flex-col items-center">
+        <input
+          type="text"
+          className="rounded-md border border-gray-300 p-2"
+          placeholder="ESP8266 IP Address"></input>
+        <button onClick={() => setESPIp("ws://" + (document.querySelector("input") as HTMLInputElement).value)} className="mt-4 bg-blue-500 text-white p-2 rounded-md">Connect</button>
+      </div>
+      }
       </div>
     </Provider>
   );
