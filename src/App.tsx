@@ -137,11 +137,11 @@ function App() {
       </Alert>
       )}
       <div className="w-full flex flex-col items-center justify-center h-screen">
-      <div className="flex flex-col items-center h-[86px]">
+      <div className="flex flex-col items-center h-[120px]">
       <p className="text-black font-minecraft font-bold text-3xl">{isSwitchDisabled && `Door is ${door?"opening":"closing"}...`}</p>
       <CircleSpinner size={50} color="black" loading={isSwitchDisabled}/>
       </div>
-      {!isSocketConnected && <Door open={door} handleSwitch={handleSwitch} isSwitchDisabled={isSwitchDisabled} />}
+      {isSocketConnected && <Door open={door} handleSwitch={handleSwitch} isSwitchDisabled={isSwitchDisabled} />}
       {!ESPIp &&
       <div className="flex flex-col items-center">
         <input
@@ -150,10 +150,11 @@ function App() {
           placeholder="ESP8266 IP Address"
           onKeyPress={handleKeyPress}
         />
-        <button onClick={() => setESPIp("ws://" + (document.querySelector("input") as HTMLInputElement).value)} className="mt-4 bg-blue-500 text-white p-2 rounded-md">Connect</button>
-        {<VoiceButton handleSwitch={handleSwitch} door={door}/>}
+        <button onClick={() => setESPIp("ws://" + (document.querySelector("input") as HTMLInputElement).value)} className="mt-4 bg-planks text-black font-minecraft p-2 rounded-md">Connect</button>
+        
       </div>
       }
+      {isSocketConnected && <VoiceButton handleSwitch={handleSwitch} door={door}/>}
       </div>
       
     </Provider>
