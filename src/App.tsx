@@ -10,6 +10,7 @@ import spider from "./audio/spider.wav";
 import villager from "./audio/villager.wav";
 import zombie from "./audio/zombie.wav";
 import enderman from "./audio/enderman.wav";
+import {VoiceButton} from "./components/VoiceButton";
 
 const mobSounds = [
   skeleton,
@@ -105,7 +106,6 @@ function App() {
   }, [ESPIp]);
 
   useEffect(() => {
-    console.log(sensorState && !door);
     if (sensorState && !door) {
       const randomMobSound = mobSounds[Math.floor(Math.random() * mobSounds.length)];
       const mobAudio = new Audio(randomMobSound);
@@ -136,7 +136,7 @@ function App() {
       </Alert>
       )}
       <div className="w-full flex flex-col items-center justify-center h-screen">
-      {isSocketConnected && <Door open={door} handleSwitch={handleSwitch} isSwitchDisabled={isSwitchDisabled} />}
+      {!isSocketConnected && <Door open={door} handleSwitch={handleSwitch} isSwitchDisabled={isSwitchDisabled} />}
       {!ESPIp &&
       <div className="flex flex-col items-center">
         <input
@@ -146,9 +146,11 @@ function App() {
           onKeyPress={handleKeyPress}
         />
         <button onClick={() => setESPIp("ws://" + (document.querySelector("input") as HTMLInputElement).value)} className="mt-4 bg-blue-500 text-white p-2 rounded-md">Connect</button>
+        {<VoiceButton handleSwitch={handleSwitch} door={door}/>}
       </div>
       }
       </div>
+      
     </Provider>
   );
 }
