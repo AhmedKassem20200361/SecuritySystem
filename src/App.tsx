@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, CSSProperties } from "react";
+import { CircleSpinner } from "react-spinners-kit";
 import { Provider } from "./components/ui/provider";
 import { Alert } from "@/components/ui/alert";
 import { Door } from "./components/door";
-import { Spinner } from "@chakra-ui/react"
 import open from "./audio/open.wav";
 import close from "./audio/close.wav";
 import skeleton from "./audio/skeleton.wav";
@@ -11,6 +11,7 @@ import villager from "./audio/villager.wav";
 import zombie from "./audio/zombie.wav";
 import enderman from "./audio/enderman.wav";
 import {VoiceButton} from "./components/VoiceButton";
+import click from "./audio/click.wav";
 
 const mobSounds = [
   skeleton,
@@ -136,6 +137,10 @@ function App() {
       </Alert>
       )}
       <div className="w-full flex flex-col items-center justify-center h-screen">
+      <div className="flex flex-col items-center h-[86px]">
+      <p className="text-black font-minecraft font-bold text-3xl">{isSwitchDisabled && `Door is ${door?"opening":"closing"}...`}</p>
+      <CircleSpinner size={50} color="black" loading={isSwitchDisabled}/>
+      </div>
       {!isSocketConnected && <Door open={door} handleSwitch={handleSwitch} isSwitchDisabled={isSwitchDisabled} />}
       {!ESPIp &&
       <div className="flex flex-col items-center">
