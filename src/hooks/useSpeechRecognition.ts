@@ -19,7 +19,7 @@ export const useSpeechRecognition = () => {
           .map(result => result[0].transcript) // Get transcript from each result
           .join(" "); // Join all parts
   
-        setText(transcript); // Update the text state
+        setText(transcript); // Update the text state)
         recognition.stop(); // Stop recognition
         setIsListening(false);
       };
